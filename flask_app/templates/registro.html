@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registro</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+
+            <h2>Registro</h2>
+            <form action="/crear_usuario" method="POST">
+                <label>Nombre:</label>
+                <input type="text" name="nombre" required><br><br>
+
+                <label>Apellido:</label>
+                <input type="text" name="apellido" required><br><br>
+
+                <label>E-mail:</label>
+                <input type="email" name="email" required><br><br>
+
+                <label>Password:</label>
+                <input type="password" name="password" required><br><br>
+
+                <label>Conf. Password:</label>
+                <input type="password" name="confirm_password" required><br><br>
+
+                <input type="submit" value="Registrarme">
+            </form>
+        </div>
+
+        <!-- INICIO DE SESIÓN -->
+        <div>
+            <h2>Inicio de Sesión</h2>
+            <form action="/login" method="POST">
+                <label>E-mail:</label>
+                <input type="email" name="email" required><br><br>
+
+                <label>password:</label>
+                <input type="password" name="password" required><br><br>
+
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

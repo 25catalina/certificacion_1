@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crear pelicula</title>
+  </head>
+  <body>
+    <h1>Crear Película</h1>
+    <form action="/guardar_pelicula" method="POST">
+      <label for="nombre">Nombre de la pelicula:</label>
+      <input type="text" id="nombre" name="nombre" required />
+      <br />
+      <label for="director">Director:</label>
+      <input type="text" id="director" name="director" required />
+      <br /> 
+      <label for="sipnosis">Sipnosis:</label>
+      <textarea id="sipnosis" name="sipnosis" required>
+
+      </textarea>
+      <label for="created_at">Fecha de Estreno:</label>
+      <input type="date" id="created_at" name="created_at" required />
+      <br />
+     
+      <br />
+      <input type="submit" value="Guardar Película">
+    </form>
+
+    <a href="/cine">inicio</a> <br />
+    <a href="/usuario">cerrar sesión</a>
+  </body>
+</html>

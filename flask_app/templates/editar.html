@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editar pelicula</title>
+</head>
+<body>
+    <h1>Editar Película</h1>
+    <form action="/actualizar_pelicula/{{ pelicula.id }}" method="POST">
+        <label for="nombre">Nombre de la pelicula:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ pelicula.nombre }}" required>
+        <br>
+        <label for="director">Director:</label>
+        <input type="text" id="director" name="director" value="{{ pelicula.director }}" required>
+        <br>
+        <label for="created_at">Fecha de Estreno:</label>
+        <input type="date" id="created_at" name="created_at" value="{{ pelicula.created_at }}" required>
+        <br>
+        <label for="sipnosis">Sipnosis:</label>
+        <textarea id="sipnosis" name="sipnosis" required>{{ pelicula.sipnosis }}</textarea>
+        <br>
+        <input type="submit" value="guardar Película">
+    </form>
+    <a href="/cine">inicio</a> <br>
+    <a href="/usuario">cerrar sesión</a>
+</body>
+</html>
