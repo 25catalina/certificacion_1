@@ -5,6 +5,7 @@ from flask import render_template,redirect,request,session,flash
 
 #importamos la clase que estamos controlando
 
+from flask_app.models import usuario
 from flask_app.models.usuario import Usuario
 from flask_app.models.pelicula import Pelicula
 
@@ -20,12 +21,14 @@ def usuarios_page():
 @app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
     data = {
-        "nombre": request.form["nombre"],   
+        "nombre": request.form["nombre"],
         "apellido": request.form["apellido"],
         "email": request.form["email"],
-        "password": request.form["password"]
+        "password": request.form["password"],
+        "confirm_password": request.form["confirm_password"]
     }
-    Usuario.save(data)
+    resultado = Usuario.save(data)
+    session['usuario_id'] = resultado
     return redirect("/pelicula")
 
 
@@ -40,17 +43,12 @@ def detalle_usuario(usuario_id):
 
 @app.route("/login", methods=["POST"])
 def login():
-    data = {
+    datos = {
         "email": request.form["email"],
         "password": request.form["password"]
     }
-    Usuario.save(data)
-    usuario = Usuario.get_by_email(data)
-    if usuario:
-        session["usuario_id"] = usuario.id
-        return redirect("/pelicula")
-    else:
-        flash("Credenciales inválidas", "login")
+    usuario = Usuario.get_by_email(datos)
+    if not usuario:
+        flash("Email no registrado", "login")
         return redirect("/usuarios")
-
 

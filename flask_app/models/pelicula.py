@@ -36,3 +36,8 @@ class Pelicula:
     def update(cls, data):
         query = "UPDATE peliculas SET nombre = %(nombre)s, director = %(director)s, sinopsis = %(sinopsis)s, updated_at = NOW() WHERE id = %(id)s;"
         return connectToMySQL('certificacion_1').query_db(query, data)
+
+    @classmethod
+    def delete(cls, data):
+        query = "DELETE FROM peliculas WHERE id = %(id)s;"
+        return connectToMySQL('certificacion_1').query_db(query, data)

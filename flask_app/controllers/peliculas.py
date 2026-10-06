@@ -8,33 +8,31 @@ from flask import render_template,redirect,request,session,flash
 from flask_app.models.usuario import Usuario
 from flask_app.models.pelicula import Pelicula
 
+@app.route("/pelicula")
+def dashboard():
+    if "usuario_id" not in session:
+        return redirect("/usuarios")
+    peliculas = Pelicula.get_all()
+    usuario = Usuario.get_one({"id": session['usuario_id']})
+    return render_template("cine.html", peliculas=peliculas, usuario=usuario)
 
-@app.route("/pelicula", methods=["GET"])
-def nueva_pelicula():
-    return render_template("cine.html")
 
-
-@app.route("/crear_pelicula", methods=["POST"])
+@app.route("/crear_pelicula", methods=["GET"])
 def crear_pelicula():
     return render_template("crear_pelicula.html")
 
 
-@app.route('/guardar_pelicula', methods=["POST, GET"])
+@app.route('/guardar_pelicula', methods=["POST"])
 def guardar_pelicula():
     data = {
         "nombre": request.form['nombre'],
         "director": request.form['director'],
         "fecha_estreno": request.form['created_at'],
-        "sipnosis": request.form['sipnosis'],
-    }
+        "sinopsis": request.form['sinopsis'],
+        "usuario_id": session['usuario_id']}
     Pelicula.save(data)
     return redirect("/pelicula")
 
-
-@app.route("/mostrar_pelicula")
-def mostrar_pelicula():
-    peliculas = Pelicula.get_all()
-    return redirect("/ver_pelicula", peliculas=peliculas)
 
 @app.route("/ver_pelicula/<int:id>")
 def ver_pelicula(id):
@@ -60,3 +58,4 @@ def eliminar_pelicula(id):
     }
     Pelicula.delete(data)
     return redirect("/pelicula")
+

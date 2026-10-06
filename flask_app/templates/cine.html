@@ -1,42 +1,46 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cine</title>
-  </head>
-  <body>
-    
-    <h1> Hola, {% if usuario %} {{ usuario.nombre }} {% endif %}</h1>
-    
-    <table>
-      <thead>
-        <tr>
-          <th>Pelicula</th>
-          <th>Director</th>
-          <th>Fecha de estreno</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            {% if peli in peliculas %}
-          <td>{{ peli.nombre }}</td>
-          <td>{{ peli.director }}</td>
-          <td>{{ peli.created_at }}</td>
-          
-          <td> 
-            <a href="/editar_pelicula/{{ peli.id }}">Editar</a>
-            <form action="/eliminar_pelicula/{{ peli.id }}" method="POST">
-              <input type="submit" value="Borrar">
-            </form>
-          </td>
-         {% endif %}
-        </tr>
-      </tbody>
 
-      <a href="/crear_pelicula">Agregar Película</a> <br>
-      <a href="/usuario">Cerrar sesión</a>
-    </table>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cine</title>
+</head>
+
+<body>
+
+  <h1> Hola, {% if usuario %} {{ usuario.nombre }} {% endif %}</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Pelicula</th>
+        <th>Director</th>
+        <th>Fecha de estreno</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for peli in peliculas %}
+      <tr>
+
+        <td>{{ peli.nombre }}</td>
+        <td>{{ peli.director }}</td>
+        <td>{{ peli.created_at }}</td>
+        <td>
+          <a href="/actualizar_pelicula/{{ peli.id }}">Editar</a>
+          <a href="/ver_pelicula/{{ peli.id }}">Ver</a>
+          <form action="/eliminar_pelicula/{{ peli.id }}" method="POST">
+            <input type="submit" value="Borrar">
+          </form>
+        </td>
+
+      </tr>{% endfor %}
+    </tbody>
+
+    <a href="/crear_pelicula">Agregar Película</a> <br>
+    <a href="/usuario">Cerrar sesión</a>
+  </table>
+</body>
+
 </html>
