@@ -13,3 +13,12 @@ class Comentario:
     def save(cls, data):
         query = "INSERT INTO comentarios (comentario, usuario_id, pelicula_id, created_at, updated_at) VALUES (%(comentario)s, %(usuario_id)s, %(pelicula_id)s, NOW(), NOW());"
         return connectToMySQL('certificacion_1').query_db(query, data)
+
+    @classmethod
+    def get_all_by_pelicula(cls, data):
+        query = "SELECT * FROM comentarios WHERE pelicula_id = %(pelicula_id)s;"
+        results = connectToMySQL('certificacion_1').query_db(query, data)
+        comentarios = []
+        for comentario in results:
+            comentarios.append(cls(comentario))
+        return comentarios

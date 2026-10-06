@@ -5,9 +5,7 @@ from flask import render_template,redirect,request,session,flash
 
 #importamos la clase que estamos controlando
 
-from flask_app.models import usuario
 from flask_app.models.usuario import Usuario
-from flask_app.models.pelicula import Pelicula
 
 @app.route("/")
 def inicio():
@@ -40,15 +38,19 @@ def detalle_usuario(usuario_id):
     usuario = Usuario.get_one(datos)
     return render_template("cine.html",usuario = usuario)
 
-
 @app.route("/login", methods=["POST"])
 def login():
-    datos = {
+    data = {
         "email": request.form["email"],
         "password": request.form["password"]
     }
-    usuario = Usuario.get_by_email(datos)
-    if not usuario:
-        flash("Email no registrado", "login")
+    usuario = Usuario.get_by_email(data)
+    if not usuario: #dice si el usuario no existe; se mandara un mensaje
+        flash("Correo electrónico no encontrado", "login") 
+        #el flash es para mandar un mensaje de error
+    if usuario.password != data["password"]: #dice si el password esta malo, te manda un mensaje
+        flash("Contraseña incorrecta", "login")
         return redirect("/usuarios")
-
+    session['usuario_id'] = usuario.id 
+    #session es para guardar el id del usuario al iniciar sesion, para que no tenga que volver a iniciar sesion
+    return redirect("/pelicula")

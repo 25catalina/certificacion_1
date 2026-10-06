@@ -27,20 +27,27 @@ def guardar_pelicula():
     data = {
         "nombre": request.form['nombre'],
         "director": request.form['director'],
-        "fecha_estreno": request.form['created_at'],
+        
         "sinopsis": request.form['sinopsis'],
-        "usuario_id": session['usuario_id']}
+        "usuario_id": session['usuario_id'],
+        "fecha_estreno": request.form['fecha_estreno']
+        }
     Pelicula.save(data)
     return redirect("/pelicula")
 
 
-@app.route("/ver_pelicula/<int:id>")
-def ver_pelicula(id):
-    datos = {
-        "id": id
+
+@app.route("/editar_pelicula/<int:id>", methods=["POST"])
+def actualizar_pelicula(id):
+    data = {
+        "id": id,
+        "nombre": request.form['nombre'],
+        "director": request.form['director'],
+        "sinopsis": request.form['sinopsis'],
+        "fecha_estreno": request.form['fecha_estreno']
     }
-    pelicula = Pelicula.get_one(datos)
-    return render_template("cine.html", pelicula=pelicula)
+    Pelicula.update(data)
+    return redirect("/pelicula")
 
 
 @app.route("/actualizar_pelicula/<int:id>", methods=["GET"])
@@ -51,6 +58,7 @@ def editar_pelicula(id):
     pelicula = Pelicula.get_one(data)
     return render_template("editar.html", pelicula=pelicula)
 
+
 @app.route("/eliminar_pelicula/<int:id>", methods=["POST"])
 def eliminar_pelicula(id):
     data = {
@@ -59,3 +67,15 @@ def eliminar_pelicula(id):
     Pelicula.delete(data)
     return redirect("/pelicula")
 
+@app.route("/ver_pelicula/<int:id>")
+def ver_pelicula(id):
+    data = {
+        "id": id
+
+    }
+    pelicula = Pelicula.get_one(data)
+    data_usuario = {
+        "id": pelicula.usuario_id
+    }
+    usuario = Usuario.get_one(data_usuario) 
+    return render_template("ver_pelicula.html", pelicula=pelicula, usuario= usuario)

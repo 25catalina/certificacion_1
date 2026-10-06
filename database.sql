@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `certificacion_1`.`peliculas` (
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
   `usuario_id` INT NOT NULL,
+  `fecha_estreno` VARCHAR(200) NULL,
   PRIMARY KEY (`id`, `usuario_id`),
   UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) VISIBLE,
   INDEX `fk_peliculas_usuarios1_idx` (`usuario_id` ASC) VISIBLE,
