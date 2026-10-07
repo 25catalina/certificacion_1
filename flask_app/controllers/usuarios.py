@@ -16,6 +16,8 @@ def usuarios_page():
     usuarios = Usuario.get_all()
     return render_template("registro.html", usuarios=usuarios)
 
+
+#registro de usuario
 @app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
     data = {
@@ -38,7 +40,7 @@ def detalle_usuario(usuario_id):
     usuario = Usuario.get_one(datos)
     return render_template("cine.html",usuario = usuario)
 
-@app.route("/login", methods=["POST"])
+@app.route("/iniciar_sesion", methods=["POST"])
 def login():
     data = {
         "email": request.form["email"],
@@ -58,3 +60,5 @@ def login():
 #retroalimentacion 1
 @app.route("/logout") #el logout es para cerrar sesion, se borra la session del usuario
 def logout():
+    session.clear() #borra la session del usuario
+    return redirect("/usuarios")

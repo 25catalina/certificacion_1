@@ -15,34 +15,35 @@
 
             <h2>Registro</h2>
             <form action="/crear_usuario" method="POST">
-                <label>Nombre:</label>
-                <input type="text" name="nombre" required><br><br>
+                <label for="nombre_registro">Nombre:</label> <!-- el label es para darle un nombre al input -->
+                <input type="text" id="nombre_registro" name="nombre" required><br><br>
 
-                <label>Apellido:</label>
-                <input type="text" name="apellido" required><br><br>
+                <label for="apellido_registro">Apellido:</label>
+                <input type="text" id="apellido_registro" name="apellido" required><br><br>
 
-                <label>E-mail:</label>
-                <input type="email" name="email" required><br><br>
+                <label for="email_usuario_registro">E-mail:</label>
+                <input type="email" id="email_usuario_registro" name="email" required><br><br>
 
-                <label>Password:</label>
-                <input type="password" name="password" required><br><br>
+                <label for="password_usuario_registro">Password:</label>
+                <input type="password" id="password_usuario_registro" name="password" required><br><br>
 
-                <label>Conf. Password:</label>
-                <input type="password" name="confirm_password" required><br><br>
+                <label for="password_usuario_registro_confirm">Conf. Password:</label>
+                <input type="password" id="password_usuario_registro_confirm" name="confirm_password" required><br><br>
 
                 <input type="submit" value="Registrarme">
             </form>
-        </div>
+
 
         <!-- INICIO DE SESIÓN -->
         <div>
             <h2>Inicio de Sesión</h2>
-            <form action="/login" method="POST">
-                <label>E-mail:</label>
-                <input type="email" name="email" required><br><br>
+            <form action="/iniciar_sesion" method="POST">
+                <label for="inicio_sesion">E-mail:</label>
+                <input type="email" id="inicio_sesion" name="email" required><br><br>
 
-                <label>password:</label>
-                <input type="password" name="password" required><br><br>
+                <label for="password_inicio_sesion">Password:</label>
+                <input type="password" id="password_inicio_sesion" name="password" required>
+                <br><br>
 
                 <input type="submit" value="Entrar">
             </form>
