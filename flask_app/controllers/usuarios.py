@@ -54,3 +54,7 @@ def login():
     session['usuario_id'] = usuario.id 
     #session es para guardar el id del usuario al iniciar sesion, para que no tenga que volver a iniciar sesion
     return redirect("/pelicula")
+
+#retroalimentacion 1
+@app.route("/logout") #el logout es para cerrar sesion, se borra la session del usuario
+def logout():
