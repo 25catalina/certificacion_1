@@ -1,6 +1,6 @@
 from flask_app import app #Importamos la app
 
-from flask import render_template,redirect,request,session,flash
+from flask import render_template,redirect,request,session,flash, redirect
 
 
 #importamos la clase que estamos controlando
@@ -17,19 +17,59 @@ def usuarios_page():
     return render_template("registro.html", usuarios=usuarios)
 
 
-#registro de usuario
-@app.route("/crear_usuario", methods=["POST"])
+#registro / crear usuario
+@app.route('/crear_usuario', methods= ["POST"])
 def crear_usuario():
-    data = {
-        "nombre": request.form["nombre"],
+
+    #para agregar un usuario lo primero que debo hacer es
+    #recuperar la informacion desde el formulario
+    #para hacer eso necesitamos el request.form
+    #%(nombre)s, %(apellido)s, %(email)s,%(password)s
+
+    #--- IMPORTANTE: TEORICAMENTE ANTES DE REGISTRAR UN NUEVO DATO
+    #--- YO DEBERÍA VALIDAR QUE LOS DATOS INGRESADOS
+    #--- SEAN VALIDOS
+
+    if not Usuario.validar_usuario(request.form):
+        
+        return redirect('/')
+
+    #--- VALIDACIONES ---
+
+    datos_usuario_registro= {
+        'nombre': request.form['nombre'],
+        'apellido': request.form['apellido'],
+        'email': request.form['email'],
+         'password':request.form['password']
+    }
+    
+    return ''
+
+#inicio sesión 
+
+
+#cerrar sesión
+
+
+@app.route('/crear_usuario', methods=['POST'])
+def registrar():
+   datos_usuario_registro = {
+        "nombre": request.form["nombre"], #debe tener el mismo nombre del name en el formulario
         "apellido": request.form["apellido"],
         "email": request.form["email"],
-        "password": request.form["password"],
+        "password": request.form["password"], 
         "confirm_password": request.form["confirm_password"]
     }
-    resultado = Usuario.save(data)
-    session['usuario_id'] = resultado
-    return redirect("/pelicula")
+   resultado = Usuario.save(datos_usuario_registro)
+   session['usuario_id'] = resultado
+
+   if not Usuario.validar_usuario(request.form):
+       # redirigimos a la plantilla con el formulario
+       return redirect('/')
+   # ... más código... guardamos
+   flash("El correo es obligatorio", "correo") #La categoría es "correo"
+   return redirect('/pelicula')
+
 
 
 @app.route('/mostrar_usuario/<int:usuario_id>')
